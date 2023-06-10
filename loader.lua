@@ -1,6 +1,6 @@
 -- Check
 if _G.SolsticeExecuted then
-    return;
+	return;
 end
 -- _G.SolsticeExecuted = true;
 
@@ -11,33 +11,33 @@ notification = loadstring(game:HttpGet("https://raw.githubusercontent.com/Blissf
 
 -- Wait for game
 repeat
-    WAIT();
+	WAIT();
 until game:IsLoaded();
 
 -- Exploit Stuff
 if not isfolder("Solstice") then
-    makefolder("Solstice");
+	makefolder("Solstice");
 end
 
 -- Supported Games
 local Games = {
-    [1686265127] = "Quarantine-Z";
-    [580765040] = "Ragdoll_Universe";
-    [1494262959] = "Criminality";
-    [595270616] = "State_Of_Anarchy";
+	[1686265127] = "Quarantine-Z";
+	[580765040] = "Ragdoll_Universe";
+	[1494262959] = "Criminality";
+	[595270616] = "State_Of_Anarchy";
 }
 
 -- Create folders
 for Id, Game in next, Games do
-    if not isfolder("Solstice/" .. Game) then
-        makefolder("Solstice/" .. Game);
-    end
+	if not isfolder("Solstice/" .. Game) then
+		makefolder("Solstice/" .. Game);
+	end
 end
 
 -- Create the Window
 Window = library.new({
-    Size = V2(400, 500),
-    Position = V2(200, 200)
+	Size = V2(400, 500),
+	Position = V2(200, 200)
 })
 
 -- Basic game info
@@ -50,20 +50,20 @@ GameNameClean = GameName:gsub("_", " ");
 SettingsFile = "Solstice/" .. GameNameLowered .. ".dat";
 
 function Load() -- LOAD SETTINGS (can be forked into a multiple config system)
-    local Result = readfile(SettingsFile) or "{}";
-    local Table = HttpService:JSONDecode(Result) or {};
+	local Result = readfile(SettingsFile) or "{}";
+	local Table = HttpService:JSONDecode(Result) or {};
 
-    Settings = util.merge(Settings or {}, Table);
+	Settings = util.merge(Settings or {}, Table);
 end
 
 function Save() -- SAVE SETTINGS
-    writefile(SettingsFile, HttpService:JSONEncode(Settings or {}) or "{}");
+	writefile(SettingsFile, HttpService:JSONEncode(Settings or {}) or "{}");
 end
 
 function SaveDefault() -- SAVE SETTINGS
-    if not isfile(SettingsFile) then
-        writefile(SettingsFile, HttpService:JSONEncode(Settings or {}) or "{}");
-    end
+	if not isfile(SettingsFile) then
+		writefile(SettingsFile, HttpService:JSONEncode(Settings or {}) or "{}");
+	end
 end
 
 -- Execute scripts + Inform player
@@ -73,6 +73,6 @@ notification.new("success", "Success", "Loaded " .. GameNameClean .. " !");
 
 -- Window Theme
 Window:newThemeControlPage({
-    Folder = "SolsticeTheme",
-    Default = "Theme",
+	Folder = "SolsticeTheme",
+	Default = "Theme",
 })
