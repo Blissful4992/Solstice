@@ -8,6 +8,21 @@ end
 util = loadstring(game:HttpGet("https://raw.githubusercontent.com/Blissful4992/Miscellaneous/main/util.lua"))();
 library = loadstring(game:HttpGet("https://raw.githubusercontent.com/Blissful4992/SimpleCSGO/main/src.lua"))();
 notification = loadstring(game:HttpGet("https://raw.githubusercontent.com/Blissful4992/Miscellaneous/main/notificationsJxereas.lua"))();
+draw = loadstring(game:HttpGet("https://raw.githubusercontent.com/Blissful4992/Miscellaneous/main/draw.lua"))();
+
+request = request or http_request or syn and syn.request or function()end
+getupvalue = getupvalue or debug and debug.getupvalue or function()end
+getupvalues = getupvalues or debug and debug.getupvalues or function()end
+setupvalue = setupvalue or debug and debug.setupvalue or function()end
+getconstants = getconstants or debug and debug.getconstants or function()end
+setconstant = setconstant or debug and debug.setconstant or function()end
+getproto = getproto or debug and debug.getproto or function()end
+queue_on_tp = queue_on_teleport or syn and syn.queue_on_teleport or function()end
+setclipboard = setclipboard or toclipboard or syn and setclipboard or function()end
+setreadonly = setreadonly or function()end
+getrawmetatable = getrawmetatable or function()end
+protect_gui = syn and syn.protect_gui or function()end
+getconnections = getconnections or function()end
 
 -- Wait for game
 repeat
