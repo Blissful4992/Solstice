@@ -605,7 +605,7 @@ if VISUALS then
     end
 
 
-    for _, Other in next, Players do
+    for _, Other in next, Players:GetPlayers() do
         if Other.Name ~= Player.Name then
             WRAP(DRAW.AddPlayer)(Other)
         end
