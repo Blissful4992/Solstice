@@ -116,7 +116,7 @@ if VISUALS then
         Suffix = " s"
     })
 
-    Visuals:newColorPicker({
+    Visuals:newPicker({
         Text = "Main", 
         Callback = function(col, a)
             UnivSettings.Visuals.Color = util.c3_Array(col, a)
@@ -132,7 +132,7 @@ if VISUALS then
         Default = UnivSettings.Visuals.Team_Check
     })
 
-    Visuals:newColorPicker({
+    Visuals:newPicker({
         Text = "Team", 
         Callback = function(col, a)
             UnivSettings.Visuals.Team_Color = util.c3_Array(col, a)
@@ -141,7 +141,7 @@ if VISUALS then
     })
 
 
-    Visuals:newColorPicker({
+    Visuals:newPicker({
         Text = "Enemies", 
         Callback = function(col, a)
             UnivSettings.Visuals.Enemy_Color = util.c3_Array(col, a)
@@ -181,7 +181,7 @@ if VISUALS then
         Default = UnivSettings.Visuals.Show_Target
     })
 
-    Visuals:newColorPicker({
+    Visuals:newPicker({
         Text = "Target", 
         Callback = function(col, a)
             UnivSettings.Visuals.Target_Color = util.c3_Array(col, a)
@@ -255,7 +255,7 @@ if VISUALS then
         Default = UnivSettings.Visuals.Health_Bar
     })
 
-    Visuals:newColorPicker({
+    Visuals:newPicker({
         Text = "Health Bar High", 
         Callback = function(col, a)
             UnivSettings.Visuals.Health_Bar_High = util.c3_Array(col, a)
@@ -263,7 +263,7 @@ if VISUALS then
         Default = {util.Array_c3(UnivSettings.Visuals.Health_Bar_High), UnivSettings.Visuals.Health_Bar_High.A}
     })
 
-    Visuals:newColorPicker({
+    Visuals:newPicker({
         Text = "Health Bar Low", 
         Callback = function(col, a)
             UnivSettings.Visuals.Health_Bar_Low = util.c3_Array(col, a)
