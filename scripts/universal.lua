@@ -823,7 +823,7 @@ if AIMBOT then
         Suffix = " px"
     })
 
-    AimbotPage:newColorPicker({
+    AimbotPage:newPicker({
         Text = "Color", 
         Callback = function(col, a)
             UnivSettings.Aimbot.FOV_Color = util.c3_Array(col, a)
