@@ -42,9 +42,9 @@ local Games = {
 	[595270616] = "State_Of_Anarchy";
 }
 local ExecuteUniversal = {
-	580765040,
-	1494262959,
-	595270616
+	[580765040] = true,
+	[1494262959] = true,
+	[595270616] = true
 }
 
 -- Create folders
