@@ -403,7 +403,7 @@ if VISUALS then
 
             --- Player Check
             local Character = plr.Character
-            if not (UnivSettings.Visuals.Toggle and Player.Character and Character and Character:FindFirstChild("Humanoid") and Character.Head.PlayerInfo.Screen.HealthContainer.HealthBar.HealthProgressFrame.Size.X.Scale > 0) then
+            if not (UnivSettings.Visuals.Toggle and Player.Character and Character and Character:FindFirstChild("Humanoid")) then
                 Visibility(false);
                 if Players:FindFirstChild(plr.Name) == nil then
                     destroyESP();
@@ -416,6 +416,11 @@ if VISUALS then
             local local_root_part = Player.Character.PrimaryPart;
             local root_part = Character.PrimaryPart;
             local human = Character:FindFirstChild("Humanoid");
+
+            if human.Health <= 0 then
+                Visibility(false);
+                return;
+            end
 
             -- Team Check + Exists Check
             local teamCheck = true;
