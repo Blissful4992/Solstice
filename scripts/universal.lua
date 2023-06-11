@@ -69,7 +69,7 @@ UnivSettings = {
     }
 }
 
-UnivSettingsFile = "Solstice/" .. GameNameLowered .. ".dat";
+UnivSettingsFile = "Solstice/universal.dat";
 
 function UnivLoad() -- LOAD SETTINGS (can be forked into a multiple config system)
     local Result = readfile(UnivSettingsFile) or "{}";
@@ -87,7 +87,6 @@ function UnivSaveDefault() -- SAVE SETTINGS
         writefile(UnivSettingsFile, HttpService:JSONEncode(UnivSettings or {}) or "{}");
     end
 end
-
 UnivSaveDefault()
 
 -- Page Toggles
