@@ -57,11 +57,6 @@ UnivSettings = {
         Aim_Mode = "Mouse";
 
         Team_Check = false;
-        Protected_Check = false;
-        Target_Faction_Members = false;
-        Target_Dueler = false;
-
-        List_Type = "None";
 
         FOV = false;
         FOV_Radius = 50;
@@ -88,6 +83,20 @@ function UnivSaveDefault() -- SAVE SETTINGS
     end
 end
 UnivSaveDefault()
+
+-- Close
+local function Close_Univ()
+    DESTROY = true
+    if UnivSettings.UI.Auto_Save then
+        warn("WX - Auto Saving")
+        UnivSave()
+    end
+    for _,v in next, RESET_FUNCTIONS or {} do
+        if type(v) == 'function' then
+            v()
+        end
+    end
+end
 
 -- Page Toggles
 VISUALS = true;
@@ -469,8 +478,8 @@ if VISUALS then
             local Hum_Health = human.Health
             local Hum_MaxHealth = human.MaxHealth
 
-            if Settings.Aimbot.Toggle and Settings.Visuals.Show_Target and Selected_Player ~= nil and plr == Selected_Player then
-                Current_Color = Settings.Visuals.Target_Color
+            if UnivSettings.Aimbot.Toggle and UnivSettings.Visuals.Show_Target and Selected_Player ~= nil and plr == Selected_Player then
+                Current_Color = UnivSettings.Visuals.Target_Color
             end
 
             updateLineColors(Current_Color)
@@ -635,7 +644,7 @@ if AIMBOT then
     AimbotPage:newToggle({
         Text = "Toggle", 
         Callback = function(bool) 
-            Settings.Aimbot.Toggle = bool
+            UnivSettings.Aimbot.Toggle = bool
 
             if bool then 
                 Aimbot_Func_Con = RS.Heartbeat:Connect(Aimbot_Func);
@@ -643,23 +652,23 @@ if AIMBOT then
                 Aimbot_Func_Con:Disconnect();
             end
         end, 
-        Default = Settings.Aimbot.Toggle
+        Default = UnivSettings.Aimbot.Toggle
     })
 
     AimbotPage:newToggle({
         Text = "Lock On", 
         Callback = function(bool) 
-            Settings.Aimbot.Lock_On = bool
+            UnivSettings.Aimbot.Lock_On = bool
         end, 
-        Default = Settings.Aimbot.Lock_On
+        Default = UnivSettings.Aimbot.Lock_On
     })
 
     AimbotPage:newSlider({
         Text = "Smoothness",
         Callback = function(newvalue)
-            Settings.Aimbot.Smoothness = newvalue
+            UnivSettings.Aimbot.Smoothness = newvalue
         end,
-        Default = Settings.Aimbot.Smoothness,
+        Default = UnivSettings.Aimbot.Smoothness,
         Min = 0, Max = 100, 
         Decimals = 0, 
         Suffix = " f"
@@ -668,9 +677,9 @@ if AIMBOT then
     AimbotPage:newSlider({
         Text = "Max Distance",
         Callback = function(newvalue)
-            Settings.Aimbot.Max_Distance = newvalue
+            UnivSettings.Aimbot.Max_Distance = newvalue
         end,
-        Default = Settings.Aimbot.Max_Distance,
+        Default = UnivSettings.Aimbot.Max_Distance,
         Min = 10, Max = 1500, 
         Decimals = 0, 
         Suffix = " s"
@@ -685,7 +694,7 @@ if AIMBOT then
         }
         for i = 1, #list do
             local v = list[i]
-            if v == Settings.Aimbot.Bone then
+            if v == UnivSettings.Aimbot.Bone then
                 default_option = i
             end
         end
@@ -693,7 +702,7 @@ if AIMBOT then
         AimbotPage:newDropdown({
             Text = "Bone", 
             Callback = function(option)
-                Settings.Aimbot.Bone = option
+                UnivSettings.Aimbot.Bone = option
             end, 
             Options = list, 
             Default = default_option
@@ -708,7 +717,7 @@ if AIMBOT then
         }
         for i = 1, #list do
             local v = list[i]
-            if v == Settings.Aimbot.Distance_Type then
+            if v == UnivSettings.Aimbot.Distance_Type then
                 default_option = i
             end
         end
@@ -716,7 +725,7 @@ if AIMBOT then
         AimbotPage:newDropdown({
             Text = "Distance Type", 
             Callback = function(option)
-                Settings.Aimbot.Distance_Type = option
+                UnivSettings.Aimbot.Distance_Type = option
             end, 
             Options = list, 
             Default = default_option
@@ -726,10 +735,117 @@ if AIMBOT then
     AimbotPage:newToggle({
         Text = "Team Check", 
         Callback = function(bool) 
-            Settings.Aimbot.Team_Check = bool
+            UnivSettings.Aimbot.Team_Check = bool
         end, 
-        Default = Settings.Aimbot.Team_Check
+        Default = UnivSettings.Aimbot.Team_Check
     })
+
+    -- Silent Aim
+    AimbotPage:newSeparator()
+
+    AimbotPage:newToggle({
+        Text = "Silent Aim", 
+        Callback = function(bool) 
+            UnivSettings.Aimbot.Silent_Aim = bool
+        end, 
+        Default = UnivSettings.Aimbot.Silent_Aim
+    })
+
+    AimbotPage:newSlider({
+        Text = "Headshot Chance",
+        Callback = function(newvalue)
+            UnivSettings.Aimbot.Headshot_Chance = newvalue
+        end,
+        Default = UnivSettings.Aimbot.Headshot_Chance,
+        Min = 0, Max = 100, 
+        Decimals = 0, 
+        Suffix = "%"
+    })
+
+    AimbotPage:newToggle({
+        Text = "Prediction", 
+        Callback = function(bool) 
+            UnivSettings.Aimbot.Prediction = bool
+        end, 
+        Default = UnivSettings.Aimbot.Prediction
+    })
+
+    AimbotPage:newSlider({
+        Text = "Prediction Delay",
+        Callback = function(newvalue)
+            UnivSettings.Aimbot.Prediction_Delay = newvalue
+        end,
+        Default = UnivSettings.Aimbot.Prediction_Delay,
+        Min = 1, Max = 15, 
+        Decimals = 0, 
+        Suffix = " f"
+    })
+
+    -- FOV
+    FOV = draw.newCircle({Transparency = 0.75, NumSides = 75, Radius = 1, Filled = false, Thickness = 1})
+    function updateFov()
+        while WAIT() do
+            if DESTROY then
+                if FOV then
+                    FOV:Remove()
+                end
+                return;
+            end
+
+            if UnivSettings.Aimbot.FOV then
+                FOV.Radius = UnivSettings.Aimbot.FOV_Radius
+                FOV.Thickness = 1
+                FOV.Color = util.Array_c3(UnivSettings.Aimbot.FOV_Color)
+                FOV.Transparency = UnivSettings.Aimbot.FOV_Color.A
+                FOV.Position = V2(Mouse.X, Mouse.Y + 36)
+                FOV.Visible = true
+            else 
+                FOV.Radius = 2000
+                FOV.Position = Camera.ViewportSize / 2
+                FOV.Visible = false
+                return
+            end
+        end
+    end
+    function RESET_FUNCTIONS.Reset_FOV()
+        FOV:Remove()
+    end
+
+    AimbotPage:newToggle({
+        Text = "Toggle", 
+        Callback = function(bool) 
+            UnivSettings.Aimbot.FOV = bool
+
+            if bool then 
+                SPAWN(updateFov)
+            end
+        end, 
+        Default = UnivSettings.Aimbot.FOV
+    })
+    if UnivSettings.Aimbot.FOV then
+        SPAWN(updateFov)
+    end
+
+    AimbotPage:newSlider({
+        Text = "Radius",
+        Callback = function(newvalue)
+            UnivSettings.Aimbot.FOV_Radius = newvalue
+        end,
+        Default = UnivSettings.Aimbot.FOV_Radius,
+        Min = 0, Max = 500, 
+        Decimals = 0, 
+        Suffix = " px"
+    })
+
+    AimbotPage:newColorPicker({
+        Text = "Color", 
+        Callback = function(col, a)
+            UnivSettings.Aimbot.FOV_Color = util.c3_Array(col, a)
+        end, 
+        Default = {util.Array_c3(UnivSettings.Aimbot.FOV_Color), UnivSettings.Aimbot.FOV_Color.A}
+    })
+
+    -- Aimbot Functions
 
     gravity = V3(0, 16, 0)
     function getBulletDrop(travelDistance, bulletSpeed)
@@ -740,14 +856,14 @@ if AIMBOT then
     function predictVelocity(part, offset, Vp)
         if not Player.Character or not Player.Character.RightHand then return nil end
 
-        if Settings.Aimbot.Prediction and (Vp or HUGE) < 10000 then
+        if UnivSettings.Aimbot.Prediction and (Vp or HUGE) < 10000 then
             -- Vp => Projectile Speed
             -- warn("Projectile speed:", Vp)
 
             local T1 = part.Position + offset -- Target Position 1
 
             local St = tick()
-            for i = 1, Settings.Aimbot.Prediction_Delay do -- time to wait in Frames to calculate Velc.
+            for i = 1, UnivSettings.Aimbot.Prediction_Delay do -- time to wait in Frames to calculate Velc.
                 RS.RenderStepped:Wait()
             end
             local t = tick() - St
@@ -770,11 +886,11 @@ if AIMBOT then
     end
 
     -- function isTargetable(plr)
-    --     if Settings.Aimbot.List_Type == "None" then
+    --     if UnivSettings.Aimbot.List_Type == "None" then
     --         return true
-    --     elseif Settings.Aimbot.List_Type == "Blacklist" then
+    --     elseif UnivSettings.Aimbot.List_Type == "Blacklist" then
     --         return Whitelisted_Players[plr.Name]
-    --     elseif Settings.Aimbot.List_Type == "Whitelist" then
+    --     elseif UnivSettings.Aimbot.List_Type == "Whitelist" then
     --         return not Whitelisted_Players[plr.Name]
     --     end
     -- end
@@ -812,12 +928,12 @@ if AIMBOT then
         -- end
         
         -- Team Check
-        if Settings.Aimbot.Team_Check and target.TeamColor == Player.TeamColor then
+        if UnivSettings.Aimbot.Team_Check and target.TeamColor == Player.TeamColor then
             return false
         end
         
         -- Distance Check
-        if (root.Position - localPos).magnitude > Settings.Aimbot.Max_Distance then
+        if (root.Position - localPos).magnitude > UnivSettings.Aimbot.Max_Distance then
             return false
         end
 
@@ -827,12 +943,12 @@ if AIMBOT then
             return false
         end
 
-        if Settings.Aimbot.Distance_Type == "Mouse" then
+        if UnivSettings.Aimbot.Distance_Type == "Mouse" then
             local d = (V2(pos2D.X, pos2D.Y) - FOV.Position).magnitude
             if d <= FOV.Radius and d < MIN then
                 return true, d
             end
-        elseif Settings.Aimbot.Distance_Type == "Distance" then 
+        elseif UnivSettings.Aimbot.Distance_Type == "Distance" then 
             local d = (root.Position - localPos).magnitude
             if d < MIN then
                 return true, d
@@ -848,7 +964,7 @@ if AIMBOT then
         local isAnimal = false
 
         do -- main loop
-            local bone = Settings.Aimbot.Bone
+            local bone = UnivSettings.Aimbot.Bone
 
             if bone ~= "Head" and bone ~= "Torso" and bone ~= "Feet" then return nil end
 
@@ -869,7 +985,7 @@ if AIMBOT then
 
     function Update_Selected()
         -- If there was a selected thing before
-        if Settings.Aimbot.Lock_On and Selected_Player then
+        if UnivSettings.Aimbot.Lock_On and Selected_Player then
             local localPos = Player.Character.PrimaryPart.Position;
             local valid, d = isValidTarget(Selected_Player, localPos, HUGE);
             if not valid then
@@ -895,7 +1011,7 @@ if AIMBOT then
 
             -- 
             local p = root.Position
-            local part = Settings.Aimbot.Bone
+            local part = UnivSettings.Aimbot.Bone
 
             -- Regular Aimbot Pos
             do
@@ -912,8 +1028,8 @@ if AIMBOT then
             end
 
             -- Silent Aim Pos (headshot chance)
-            if Settings.Aimbot.Headshot_Chance < 90 and part == "Head" and char:FindFirstChild("Head") then
-                if RANDOM(0, 100) <= Settings.Aimbot.Headshot_Chance then
+            if UnivSettings.Aimbot.Headshot_Chance < 90 and part == "Head" and char:FindFirstChild("Head") then
+                if RANDOM(0, 100) <= UnivSettings.Aimbot.Headshot_Chance then
                     -- AIM HEAD
                     p = predictVelocity(char.Head or root, V3(0,0,0), ProjectilePower)
                 else
@@ -934,9 +1050,9 @@ if AIMBOT then
                 Aimbot_Once_HB:Disconnect();
             end
             return
-        elseif Settings.Aimbot.Toggle and not Settings.Camera.Free_Cam then
+        elseif UnivSettings.Aimbot.Toggle then -- and not UnivSettings.Camera.Free_Cam
             Update_Selected()
-            
+
             if Aiming and Selected_Player and Selected_Aim_Pos then
                 if not Selected_Player.Character or not Player.Character then
                     return;
@@ -946,10 +1062,10 @@ if AIMBOT then
                     return;
                 end
 
-                if (Selected_Player.Character.PrimaryPart.Position - Player.Character.PrimaryPart.Position).magnitude < Settings.Aimbot.Max_Distance then
+                if (Selected_Player.Character.PrimaryPart.Position - Player.Character.PrimaryPart.Position).magnitude < UnivSettings.Aimbot.Max_Distance then
                     local pos, vis = toPoint(Camera, Selected_Aim_Pos)
                     if vis then
-                        local smoothness = CLAMP(100-Settings.Aimbot.Smoothness, 1, 100)/100
+                        local smoothness = CLAMP(100-UnivSettings.Aimbot.Smoothness, 1, 100)/100
                         local sens = CLAMP(smoothness, 0.01, 1)/2
                         mousemoverel(ROUND((pos.X - Mouse.X - UI_Inset.X) * sens), ROUND((pos.Y - Mouse.Y - UI_Inset.Y) * sens))
                     end
@@ -957,7 +1073,7 @@ if AIMBOT then
             end
         end
     end;
-    if Settings.Aimbot.Toggle then
+    if UnivSettings.Aimbot.Toggle then
         Aimbot_Once_HB = RS.Heartbeat:Connect(Aimbot_Once);
     end
 end
