@@ -84,20 +84,6 @@ function UnivSaveDefault() -- SAVE SETTINGS
 end
 UnivSaveDefault()
 
--- Close
-local function Close_Univ()
-    DESTROY = true
-    if UnivSettings.UI.Auto_Save then
-        warn("WX - Auto Saving")
-        UnivSave()
-    end
-    for _,v in next, RESET_FUNCTIONS or {} do
-        if type(v) == 'function' then
-            v()
-        end
-    end
-end
-
 -- Page Toggles
 VISUALS = true;
 AIMBOT = true;

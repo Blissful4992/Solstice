@@ -88,6 +88,16 @@ if Supported then
 	end
 end
 
+RESET_FUNCTIONS = {}
+function Close_Script()
+	DESTROY = true
+	for _,v in next, RESET_FUNCTIONS or {} do
+		if type(v) == 'function' then
+			v()
+		end
+	end
+end
+
 if ExecuteUniversal[game.GameId] and Supported then
 	loadstring(game:HttpGet("https://raw.githubusercontent.com/Blissful4992/Solstice/main/scripts/universal.lua"))();
 end
