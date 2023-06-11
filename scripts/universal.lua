@@ -633,9 +633,9 @@ if AIMBOT then
             UnivSettings.Aimbot.Toggle = bool
 
             if bool then 
-                Aimbot_Func_Con = RS.Heartbeat:Connect(Aimbot_Func);
-            elseif Aimbot_Func_Con then
-                Aimbot_Func_Con:Disconnect();
+                Aimbot_Once_HB = RS.Heartbeat:Connect(Aimbot_Once);
+            elseif Aimbot_Once_HB then
+                Aimbot_Once_HB:Disconnect();
             end
         end, 
         Default = UnivSettings.Aimbot.Toggle
