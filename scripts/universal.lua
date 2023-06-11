@@ -95,9 +95,9 @@ AIMBOT = true;
 
 -- Visuals
 if VISUALS then
-    local Visuals = Window.newPage({Text = "Visuals"})
+    VisualsPage = Window.newPage({Text = "Visuals"})
 
-    Visuals:newToggle({
+    VisualsPage:newToggle({
         Text = "Toggle", 
         Callback = function(bool) 
             UnivSettings.Visuals.Toggle = bool
@@ -105,7 +105,7 @@ if VISUALS then
         Default = UnivSettings.Visuals.Toggle
     })
 
-    Visuals:newSlider({
+    VisualsPage:newSlider({
         Text = "Max Distance",
         Callback = function(newvalue)
             UnivSettings.Visuals.Max_Distance = newvalue
@@ -116,7 +116,7 @@ if VISUALS then
         Suffix = " s"
     })
 
-    Visuals:newPicker({
+    VisualsPage:newPicker({
         Text = "Main", 
         Callback = function(col, a)
             UnivSettings.Visuals.Color = util.c3_Array(col, a)
@@ -124,7 +124,7 @@ if VISUALS then
         Default = {util.Array_c3(UnivSettings.Visuals.Color), UnivSettings.Visuals.Color.A}
     })
 
-    Visuals:newToggle({
+    VisualsPage:newToggle({
         Text = "Team Check", 
         Callback = function(bool) 
             UnivSettings.Visuals.Team_Check = bool
@@ -132,7 +132,7 @@ if VISUALS then
         Default = UnivSettings.Visuals.Team_Check
     })
 
-    Visuals:newPicker({
+    VisualsPage:newPicker({
         Text = "Team", 
         Callback = function(col, a)
             UnivSettings.Visuals.Team_Color = util.c3_Array(col, a)
@@ -141,7 +141,7 @@ if VISUALS then
     })
 
 
-    Visuals:newPicker({
+    VisualsPage:newPicker({
         Text = "Enemies", 
         Callback = function(col, a)
             UnivSettings.Visuals.Enemy_Color = util.c3_Array(col, a)
@@ -149,7 +149,7 @@ if VISUALS then
         Default = {util.Array_c3(UnivSettings.Visuals.Enemy_Color), UnivSettings.Visuals.Enemy_Color.A}
     })
 
-    Visuals:newToggle({
+    VisualsPage:newToggle({
         Text = "Show Enemy", 
         Callback = function(bool) 
             UnivSettings.Visuals.Show_Enemy = bool
@@ -157,7 +157,7 @@ if VISUALS then
         Default = UnivSettings.Visuals.Show_Enemy
     })
 
-    Visuals:newToggle({
+    VisualsPage:newToggle({
         Text = "Show Team", 
         Callback = function(bool) 
             UnivSettings.Visuals.Show_Team = bool
@@ -165,7 +165,7 @@ if VISUALS then
         Default = UnivSettings.Visuals.Show_Team
     })
 
-    Visuals:newToggle({
+    VisualsPage:newToggle({
         Text = "Show Team Color", 
         Callback = function(bool) 
             UnivSettings.Visuals.Show_Team_Color = bool
@@ -173,7 +173,7 @@ if VISUALS then
         Default = UnivSettings.Visuals.Show_Team_Color
     })
 
-    Visuals:newToggle({
+    VisualsPage:newToggle({
         Text = "Show Target", 
         Callback = function(bool) 
             UnivSettings.Visuals.Show_Target = bool
@@ -181,7 +181,7 @@ if VISUALS then
         Default = UnivSettings.Visuals.Show_Target
     })
 
-    Visuals:newPicker({
+    VisualsPage:newPicker({
         Text = "Target", 
         Callback = function(col, a)
             UnivSettings.Visuals.Target_Color = util.c3_Array(col, a)
@@ -190,9 +190,9 @@ if VISUALS then
     })
 
     -- Info
-    Visuals:newSeparator();
+    VisualsPage:newSeparator();
     
-    Visuals:newToggle({
+    VisualsPage:newToggle({
         Text = "Toggle", 
         Callback = function(bool) 
             UnivSettings.Visuals.Info = bool
@@ -200,7 +200,7 @@ if VISUALS then
         Default = UnivSettings.Visuals.Info
     })
 
-    Visuals:newChipset({
+    VisualsPage:newChipset({
         Text = "Options", 
         Callback = function(tbl)
             UnivSettings.Visuals.Names = tbl["Names"]
@@ -215,9 +215,9 @@ if VISUALS then
     })
 
     -- Boxes
-    Visuals:newSeparator();
+    VisualsPage:newSeparator();
 
-    Visuals:newToggle({
+    VisualsPage:newToggle({
         Text = "Toggle", 
         Callback = function(bool) 
             UnivSettings.Visuals.Boxes = bool
@@ -237,7 +237,7 @@ if VISUALS then
                 default_option = i
             end
         end
-        Visuals:newDropdown({
+        VisualsPage:newDropdown({
             Text = "Box Type", 
             Callback = function(option)
                 UnivSettings.Visuals.Boxes_Mode = option
@@ -247,7 +247,7 @@ if VISUALS then
         })
     end
 
-    Visuals:newToggle({
+    VisualsPage:newToggle({
         Text = "Health Bar", 
         Callback = function(bool) 
             UnivSettings.Visuals.Health_Bar = bool
@@ -255,7 +255,7 @@ if VISUALS then
         Default = UnivSettings.Visuals.Health_Bar
     })
 
-    Visuals:newPicker({
+    VisualsPage:newPicker({
         Text = "Health Bar High", 
         Callback = function(col, a)
             UnivSettings.Visuals.Health_Bar_High = util.c3_Array(col, a)
@@ -263,7 +263,7 @@ if VISUALS then
         Default = {util.Array_c3(UnivSettings.Visuals.Health_Bar_High), UnivSettings.Visuals.Health_Bar_High.A}
     })
 
-    Visuals:newPicker({
+    VisualsPage:newPicker({
         Text = "Health Bar Low", 
         Callback = function(col, a)
             UnivSettings.Visuals.Health_Bar_Low = util.c3_Array(col, a)
@@ -272,9 +272,9 @@ if VISUALS then
     })
 
     -- Tracers
-    Visuals:newSeparator();
+    VisualsPage:newSeparator();
 
-    Visuals:newToggle({
+    VisualsPage:newToggle({
         Text = "Tracers", 
         Callback = function(bool) 
             UnivSettings.Visuals.Tracers = bool
@@ -295,7 +295,7 @@ if VISUALS then
                 default_option = i
             end
         end
-        Visuals:newDropdown({
+        VisualsPage:newDropdown({
             Text = "Tracer Origin", 
             Callback = function(option)
                 UnivSettings.Visuals.Tracer_Origin = option
@@ -469,6 +469,10 @@ if VISUALS then
             local Hum_Health = human.Health
             local Hum_MaxHealth = human.MaxHealth
 
+            if Settings.Aimbot.Toggle and Settings.Visuals.Show_Target and Selected_Player ~= nil and plr == Selected_Player then
+                Current_Color = Settings.Visuals.Target_Color
+            end
+
             updateLineColors(Current_Color)
 
             local ratio = 2500/root_pos.Z
@@ -626,5 +630,334 @@ if VISUALS then
 end
 
 if AIMBOT then
+    AimbotPage = Window.newPage({Text = "Aiming"})
 
+    AimbotPage:newToggle({
+        Text = "Toggle", 
+        Callback = function(bool) 
+            Settings.Aimbot.Toggle = bool
+
+            if bool then 
+                Aimbot_Func_Con = RS.Heartbeat:Connect(Aimbot_Func);
+            elseif Aimbot_Func_Con then
+                Aimbot_Func_Con:Disconnect();
+            end
+        end, 
+        Default = Settings.Aimbot.Toggle
+    })
+
+    AimbotPage:newToggle({
+        Text = "Lock On", 
+        Callback = function(bool) 
+            Settings.Aimbot.Lock_On = bool
+        end, 
+        Default = Settings.Aimbot.Lock_On
+    })
+
+    AimbotPage:newSlider({
+        Text = "Smoothness",
+        Callback = function(newvalue)
+            Settings.Aimbot.Smoothness = newvalue
+        end,
+        Default = Settings.Aimbot.Smoothness,
+        Min = 0, Max = 100, 
+        Decimals = 0, 
+        Suffix = " f"
+    })
+
+    AimbotPage:newSlider({
+        Text = "Max Distance",
+        Callback = function(newvalue)
+            Settings.Aimbot.Max_Distance = newvalue
+        end,
+        Default = Settings.Aimbot.Max_Distance,
+        Min = 10, Max = 1500, 
+        Decimals = 0, 
+        Suffix = " s"
+    })
+
+    do
+        local default_option
+        local list =  {
+            "Head"; 
+            "Torso"; 
+            "Feet";
+        }
+        for i = 1, #list do
+            local v = list[i]
+            if v == Settings.Aimbot.Bone then
+                default_option = i
+            end
+        end
+
+        AimbotPage:newDropdown({
+            Text = "Bone", 
+            Callback = function(option)
+                Settings.Aimbot.Bone = option
+            end, 
+            Options = list, 
+            Default = default_option
+        })
+    end
+
+    do
+        local default_option
+        local list =  {
+            "Mouse";
+            "Distance";
+        }
+        for i = 1, #list do
+            local v = list[i]
+            if v == Settings.Aimbot.Distance_Type then
+                default_option = i
+            end
+        end
+
+        AimbotPage:newDropdown({
+            Text = "Distance Type", 
+            Callback = function(option)
+                Settings.Aimbot.Distance_Type = option
+            end, 
+            Options = list, 
+            Default = default_option
+        })
+    end
+
+    AimbotPage:newToggle({
+        Text = "Team Check", 
+        Callback = function(bool) 
+            Settings.Aimbot.Team_Check = bool
+        end, 
+        Default = Settings.Aimbot.Team_Check
+    })
+
+    gravity = V3(0, 16, 0)
+    function getBulletDrop(travelDistance, bulletSpeed)
+        local travelTime = travelDistance/bulletSpeed
+        return gravity * travelTime ^ 2
+    end
+    
+    function predictVelocity(part, offset, Vp)
+        if not Player.Character or not Player.Character.RightHand then return nil end
+
+        if Settings.Aimbot.Prediction and (Vp or HUGE) < 10000 then
+            -- Vp => Projectile Speed
+            -- warn("Projectile speed:", Vp)
+
+            local T1 = part.Position + offset -- Target Position 1
+
+            local St = tick()
+            for i = 1, Settings.Aimbot.Prediction_Delay do -- time to wait in Frames to calculate Velc.
+                RS.RenderStepped:Wait()
+            end
+            local t = tick() - St
+
+            local P2 = Player.Character.RightHand.Position          -- Local Position 2
+            local T2 = part.Position + offset                   -- Target Position 2
+            local Vt = (T1-T2).magnitude/t                               -- Explicit Target Speed
+            local Tf = (P2-T2).magnitude/Vp                           -- Explicit Bullet Fly Time
+            local To = Vt * Tf                                      -- Distance Moved during Arrow Fly Time
+            local Ot = T2-T1                                     -- Offset between 1st T Pos and 2nd T Pos
+            local Dt = CF(T2, T2 + Ot + V3(SMALL,SMALL,SMALL))     -- Target Facing Direction
+
+            local Fp = (Dt * CF(0, 0, -To)).p                    -- Final Position without Bullet Drop Compensated
+            local Bd = getBulletDrop((P2-Fp).magnitude, Vp)         -- Calculate Bullet Drop
+            Fp = Fp + Bd                                              -- Final Position with Bullet Drop Compensated
+
+            return Fp
+        end
+        return part.Position + offset
+    end
+
+    -- function isTargetable(plr)
+    --     if Settings.Aimbot.List_Type == "None" then
+    --         return true
+    --     elseif Settings.Aimbot.List_Type == "Blacklist" then
+    --         return Whitelisted_Players[plr.Name]
+    --     elseif Settings.Aimbot.List_Type == "Whitelist" then
+    --         return not Whitelisted_Players[plr.Name]
+    --     end
+    -- end
+
+    function isValidTarget(target, localPos, MIN)
+        if not target then
+            return false
+        end
+
+        -- Self check
+        if target == Player then
+            return false
+        end
+
+        -- Char check
+        local char = target.Character
+        if not char or not char.PrimaryPart then
+            return false
+        end
+        local root = char.PrimaryPart;
+
+        local human = char:FindFirstChildOfClass("Humanoid")
+        if not human then
+            return false
+        end
+
+        -- Health Check
+        if human.Health <= 0 then
+            return false
+        end
+        
+        -- -- Check that player can be targeted
+        -- if not isTargetable(target) then
+        --     return false
+        -- end
+        
+        -- Team Check
+        if Settings.Aimbot.Team_Check and target.TeamColor == Player.TeamColor then
+            return false
+        end
+        
+        -- Distance Check
+        if (root.Position - localPos).magnitude > Settings.Aimbot.Max_Distance then
+            return false
+        end
+
+        -- Update closest player
+        local pos2D, visible = toPoint(Camera, root.Position)
+        if not visible then
+            return false
+        end
+
+        if Settings.Aimbot.Distance_Type == "Mouse" then
+            local d = (V2(pos2D.X, pos2D.Y) - FOV.Position).magnitude
+            if d <= FOV.Radius and d < MIN then
+                return true, d
+            end
+        elseif Settings.Aimbot.Distance_Type == "Distance" then 
+            local d = (root.Position - localPos).magnitude
+            if d < MIN then
+                return true, d
+            end
+        end
+    end
+
+
+    function getClosest()
+        if not Player.Character or not Player.Character.PrimaryPart or PlayerCharacter.IsDead then return nil end
+
+        local SearchFolder, Closest;
+        local isAnimal = false
+
+        do -- main loop
+            local bone = Settings.Aimbot.Bone
+
+            if bone ~= "Head" and bone ~= "Torso" and bone ~= "Feet" then return nil end
+
+            local MIN = HUGE
+            local localPos = Player.Character.PrimaryPart.Position
+
+            for _, target in next, Players:GetPlayers() do
+                local valid, d = isValidTarget(target, localPos, MIN)
+                if valid then
+                    Closest = target
+                    MIN = d
+                end
+            end
+        end
+
+        return Closest
+    end
+
+    function Update_Selected()
+        -- If there was a selected thing before
+        if Settings.Aimbot.Lock_On and Selected_Player then
+            local localPos = Player.Character.PrimaryPart.Position;
+            local valid, d = isValidTarget(Selected_Player, localPos, HUGE);
+            if not valid then
+                Selected_Player = getClosest();
+            end
+        else
+            Selected_Player = getClosest();
+        end
+
+        if Selected_Player then
+            local char = Selected_Player.Character;
+            if not char then
+                return;
+            end
+
+            local root = char.PrimaryPart
+            if not root then
+                return;
+            end
+
+            -- Get Projectile Power
+            local ProjectilePower = getProjectilePower and getProjectilePower() or 1500;
+
+            -- 
+            local p = root.Position
+            local part = Settings.Aimbot.Bone
+
+            -- Regular Aimbot Pos
+            do
+                if part == "Head" and char:FindFirstChild("Head") then
+                    p = predictVelocity(char.Head or root, V3(0,0,0), ProjectilePower)
+                elseif part == "Torso" then
+                    p = predictVelocity(root, V3(0,0,0), ProjectilePower)
+                elseif part == "Feet" then
+                    p = predictVelocity(root, V3(0, -2.5, 0), ProjectilePower)
+                else 
+                    p = predictVelocity(root, V3(0,0,0), ProjectilePower)
+                end
+                Selected_Aim_Pos = p;
+            end
+
+            -- Silent Aim Pos (headshot chance)
+            if Settings.Aimbot.Headshot_Chance < 90 and part == "Head" and char:FindFirstChild("Head") then
+                if RANDOM(0, 100) <= Settings.Aimbot.Headshot_Chance then
+                    -- AIM HEAD
+                    p = predictVelocity(char.Head or root, V3(0,0,0), ProjectilePower)
+                else
+                    -- AIM BODY
+                    p = predictVelocity(root, V3(0,0,0), ProjectilePower)
+                end
+                Selected_Silent_Pos = p;
+            else
+                Selected_Silent_Pos = Selected_Aim_Pos;
+            end
+        end
+    end
+
+    local RCB = Enum.RaycastFilterType.Blacklist
+    Aimbot_Once = function()
+        if DESTROY then
+            if Aimbot_Once_HB then
+                Aimbot_Once_HB:Disconnect();
+            end
+            return
+        elseif Settings.Aimbot.Toggle and not Settings.Camera.Free_Cam then
+            Update_Selected()
+            
+            if Aiming and Selected_Player and Selected_Aim_Pos then
+                if not Selected_Player.Character or not Player.Character then
+                    return;
+                end
+
+                if not Selected_Player.Character.PrimaryPart or not Player.Character.PrimaryPart then
+                    return;
+                end
+
+                if (Selected_Player.Character.PrimaryPart.Position - Player.Character.PrimaryPart.Position).magnitude < Settings.Aimbot.Max_Distance then
+                    local pos, vis = toPoint(Camera, Selected_Aim_Pos)
+                    if vis then
+                        local smoothness = CLAMP(100-Settings.Aimbot.Smoothness, 1, 100)/100
+                        local sens = CLAMP(smoothness, 0.01, 1)/2
+                        mousemoverel(ROUND((pos.X - Mouse.X - UI_Inset.X) * sens), ROUND((pos.Y - Mouse.Y - UI_Inset.Y) * sens))
+                    end
+                end
+            end
+        end
+    end;
+    if Settings.Aimbot.Toggle then
+        Aimbot_Once_HB = RS.Heartbeat:Connect(Aimbot_Once);
+    end
 end
