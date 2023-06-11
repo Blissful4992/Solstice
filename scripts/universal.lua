@@ -607,7 +607,7 @@ if VISUALS then
 
     for _, Other in next, Players:GetPlayers() do
         if Other.Name ~= Player.Name then
-            WRAP(DRAW.AddPlayer)(Other)
+            WRAP(draw.AddPlayer)(Other)
         end
     end
 
@@ -615,7 +615,7 @@ if VISUALS then
         if DESTROY then
             c_added:Disconnect()
         else
-            WRAP(DRAW.AddPlayer)(Other)
+            WRAP(draw.AddPlayer)(Other)
         end
     end)
 end
