@@ -188,7 +188,7 @@ if VISUALS then
     VisualsPage:newSeparator();
     
     VisualsPage:newToggle({
-        Text = "Toggle", 
+        Text = "Info", 
         Callback = function(bool) 
             UnivSettings.Visuals.Info = bool
         end, 
@@ -213,7 +213,7 @@ if VISUALS then
     VisualsPage:newSeparator();
 
     VisualsPage:newToggle({
-        Text = "Toggle", 
+        Text = "Boxes", 
         Callback = function(bool) 
             UnivSettings.Visuals.Boxes = bool
         end, 
@@ -628,7 +628,7 @@ if AIMBOT then
     AimbotPage = Window.newPage({Text = "Aiming"})
 
     AimbotPage:newToggle({
-        Text = "Toggle", 
+        Text = "Aimbot", 
         Callback = function(bool) 
             UnivSettings.Aimbot.Toggle = bool
 
@@ -798,7 +798,7 @@ if AIMBOT then
     end
 
     AimbotPage:newToggle({
-        Text = "Toggle", 
+        Text = "FOV Circle", 
         Callback = function(bool) 
             UnivSettings.Aimbot.FOV = bool
 
