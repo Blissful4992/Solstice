@@ -1,5 +1,5 @@
--- Settings
-Settings = {
+-- UnivSettings
+UnivSettings = {
     Visuals = {
         Toggle = false;
         Max_Distance = 1000;
@@ -68,7 +68,27 @@ Settings = {
         FOV_Color = {R = 255, G = 255, B = 255};
     }
 }
-SaveDefault()
+
+UnivSettingsFile = "Solstice/" .. GameNameLowered .. ".dat";
+
+function UnivLoad() -- LOAD SETTINGS (can be forked into a multiple config system)
+    local Result = readfile(UnivSettingsFile) or "{}";
+    local Table = HttpService:JSONDecode(Result) or {};
+
+    UnivSettings = util.merge(UnivSettings or {}, Table);
+end
+
+function UnivSave() -- SAVE SETTINGS
+    writefile(UnivSettingsFile, HttpService:JSONEncode(UnivSettings or {}) or "{}");
+end
+
+function UnivSaveDefault() -- SAVE SETTINGS
+    if not isfile(UnivSettingsFile) then
+        writefile(UnivSettingsFile, HttpService:JSONEncode(UnivSettings or {}) or "{}");
+    end
+end
+
+UnivSaveDefault()
 
 -- Page Toggles
 VISUALS = true;
@@ -81,17 +101,17 @@ if VISUALS then
     Visuals:newToggle({
         Text = "Toggle", 
         Callback = function(bool) 
-            Settings.Visuals.Toggle = bool
+            UnivSettings.Visuals.Toggle = bool
         end, 
-        Default = Settings.Visuals.Toggle
+        Default = UnivSettings.Visuals.Toggle
     })
 
     Visuals:newSlider({
         Text = "Max Distance",
         Callback = function(newvalue)
-            Settings.Visuals.Max_Distance = newvalue
+            UnivSettings.Visuals.Max_Distance = newvalue
         end,
-        Default = Settings.Visuals.Max_Distance,
+        Default = UnivSettings.Visuals.Max_Distance,
         Min = 10, Max = 6000, 
         Decimals = 0, 
         Suffix = " s"
@@ -100,74 +120,74 @@ if VISUALS then
     Visuals:newColorPicker({
         Text = "Main", 
         Callback = function(col, a)
-            Settings.Visuals.Color = util.c3_Array(col, a)
+            UnivSettings.Visuals.Color = util.c3_Array(col, a)
         end, 
-        Default = {util.Array_c3(Settings.Visuals.Color), Settings.Visuals.Color.A}
+        Default = {util.Array_c3(UnivSettings.Visuals.Color), UnivSettings.Visuals.Color.A}
     })
 
     Visuals:newToggle({
         Text = "Team Check", 
         Callback = function(bool) 
-            Settings.Visuals.Team_Check = bool
+            UnivSettings.Visuals.Team_Check = bool
         end, 
-        Default = Settings.Visuals.Team_Check
+        Default = UnivSettings.Visuals.Team_Check
     })
 
     Visuals:newColorPicker({
         Text = "Team", 
         Callback = function(col, a)
-            Settings.Visuals.Team_Color = util.c3_Array(col, a)
+            UnivSettings.Visuals.Team_Color = util.c3_Array(col, a)
         end, 
-        Default = {util.Array_c3(Settings.Visuals.Team_Color), Settings.Visuals.Team_Color.A}
+        Default = {util.Array_c3(UnivSettings.Visuals.Team_Color), UnivSettings.Visuals.Team_Color.A}
     })
 
 
     Visuals:newColorPicker({
         Text = "Enemies", 
         Callback = function(col, a)
-            Settings.Visuals.Enemy_Color = util.c3_Array(col, a)
+            UnivSettings.Visuals.Enemy_Color = util.c3_Array(col, a)
         end, 
-        Default = {util.Array_c3(Settings.Visuals.Enemy_Color), Settings.Visuals.Enemy_Color.A}
+        Default = {util.Array_c3(UnivSettings.Visuals.Enemy_Color), UnivSettings.Visuals.Enemy_Color.A}
     })
 
     Visuals:newToggle({
         Text = "Show Enemy", 
         Callback = function(bool) 
-            Settings.Visuals.Show_Enemy = bool
+            UnivSettings.Visuals.Show_Enemy = bool
         end, 
-        Default = Settings.Visuals.Show_Enemy
+        Default = UnivSettings.Visuals.Show_Enemy
     })
 
     Visuals:newToggle({
         Text = "Show Team", 
         Callback = function(bool) 
-            Settings.Visuals.Show_Team = bool
+            UnivSettings.Visuals.Show_Team = bool
         end, 
-        Default = Settings.Visuals.Show_Team
+        Default = UnivSettings.Visuals.Show_Team
     })
 
     Visuals:newToggle({
         Text = "Show Team Color", 
         Callback = function(bool) 
-            Settings.Visuals.Show_Team_Color = bool
+            UnivSettings.Visuals.Show_Team_Color = bool
         end, 
-        Default = Settings.Visuals.Show_Team_Color
+        Default = UnivSettings.Visuals.Show_Team_Color
     })
 
     Visuals:newToggle({
         Text = "Show Target", 
         Callback = function(bool) 
-            Settings.Visuals.Show_Target = bool
+            UnivSettings.Visuals.Show_Target = bool
         end, 
-        Default = Settings.Visuals.Show_Target
+        Default = UnivSettings.Visuals.Show_Target
     })
 
     Visuals:newColorPicker({
         Text = "Target", 
         Callback = function(col, a)
-            Settings.Visuals.Target_Color = util.c3_Array(col, a)
+            UnivSettings.Visuals.Target_Color = util.c3_Array(col, a)
         end, 
-        Default = {util.Array_c3(Settings.Visuals.Target_Color), Settings.Visuals.Target_Color.A}
+        Default = {util.Array_c3(UnivSettings.Visuals.Target_Color), UnivSettings.Visuals.Target_Color.A}
     })
 
     -- Info
@@ -176,22 +196,22 @@ if VISUALS then
     Visuals:newToggle({
         Text = "Toggle", 
         Callback = function(bool) 
-            Settings.Visuals.Info = bool
+            UnivSettings.Visuals.Info = bool
         end, 
-        Default = Settings.Visuals.Info
+        Default = UnivSettings.Visuals.Info
     })
 
     Visuals:newChipset({
         Text = "Options", 
         Callback = function(tbl)
-            Settings.Visuals.Names = tbl["Names"]
-            Settings.Visuals.Health = tbl["Health"]
-            Settings.Visuals.Distance = tbl["Distance"]
+            UnivSettings.Visuals.Names = tbl["Names"]
+            UnivSettings.Visuals.Health = tbl["Health"]
+            UnivSettings.Visuals.Distance = tbl["Distance"]
         end, 
         Options = {
-            Names = Settings.Visuals.Names;
-            Health = Settings.Visuals.Health;
-            Distance = Settings.Visuals.Distance;
+            Names = UnivSettings.Visuals.Names;
+            Health = UnivSettings.Visuals.Health;
+            Distance = UnivSettings.Visuals.Distance;
         }
     })
 
@@ -201,9 +221,9 @@ if VISUALS then
     Visuals:newToggle({
         Text = "Toggle", 
         Callback = function(bool) 
-            Settings.Visuals.Boxes = bool
+            UnivSettings.Visuals.Boxes = bool
         end, 
-        Default = Settings.Visuals.Boxes
+        Default = UnivSettings.Visuals.Boxes
     })
 
     do
@@ -214,14 +234,14 @@ if VISUALS then
         }
         for i = 1, #list do
             local v = list[i]
-            if v == Settings.Visuals.Boxes_Mode then
+            if v == UnivSettings.Visuals.Boxes_Mode then
                 default_option = i
             end
         end
         Visuals:newDropdown({
             Text = "Box Type", 
             Callback = function(option)
-                Settings.Visuals.Boxes_Mode = option
+                UnivSettings.Visuals.Boxes_Mode = option
             end, 
             Options = list, 
             Default = default_option
@@ -231,25 +251,25 @@ if VISUALS then
     Visuals:newToggle({
         Text = "Health Bar", 
         Callback = function(bool) 
-            Settings.Visuals.Health_Bar = bool
+            UnivSettings.Visuals.Health_Bar = bool
         end, 
-        Default = Settings.Visuals.Health_Bar
+        Default = UnivSettings.Visuals.Health_Bar
     })
 
     Visuals:newColorPicker({
         Text = "Health Bar High", 
         Callback = function(col, a)
-            Settings.Visuals.Health_Bar_High = util.c3_Array(col, a)
+            UnivSettings.Visuals.Health_Bar_High = util.c3_Array(col, a)
         end, 
-        Default = {util.Array_c3(Settings.Visuals.Health_Bar_High), Settings.Visuals.Health_Bar_High.A}
+        Default = {util.Array_c3(UnivSettings.Visuals.Health_Bar_High), UnivSettings.Visuals.Health_Bar_High.A}
     })
 
     Visuals:newColorPicker({
         Text = "Health Bar Low", 
         Callback = function(col, a)
-            Settings.Visuals.Health_Bar_Low = util.c3_Array(col, a)
+            UnivSettings.Visuals.Health_Bar_Low = util.c3_Array(col, a)
         end, 
-        Default = {util.Array_c3(Settings.Visuals.Health_Bar_Low), Settings.Visuals.Health_Bar_Low.A}
+        Default = {util.Array_c3(UnivSettings.Visuals.Health_Bar_Low), UnivSettings.Visuals.Health_Bar_Low.A}
     })
 
     -- Tracers
@@ -258,9 +278,9 @@ if VISUALS then
     Visuals:newToggle({
         Text = "Tracers", 
         Callback = function(bool) 
-            Settings.Visuals.Tracers = bool
+            UnivSettings.Visuals.Tracers = bool
         end, 
-        Default = Settings.Visuals.Tracers
+        Default = UnivSettings.Visuals.Tracers
     })
 
     do
@@ -272,14 +292,14 @@ if VISUALS then
         }
         for i = 1, #list do
             local v = list[i]
-            if v == Settings.Visuals.Tracer_Origin then
+            if v == UnivSettings.Visuals.Tracer_Origin then
                 default_option = i
             end
         end
         Visuals:newDropdown({
             Text = "Tracer Origin", 
             Callback = function(option)
-                Settings.Visuals.Tracer_Origin = option
+                UnivSettings.Visuals.Tracer_Origin = option
             end, 
             Options = list, 
             Default = default_option
@@ -384,7 +404,7 @@ if VISUALS then
 
             --- Player Check
             local Character = plr.Character
-            if not (Settings.Visuals.Toggle and Player.Character and Character and Character:FindFirstChild("Humanoid") and Character.Head.PlayerInfo.Screen.HealthContainer.HealthBar.HealthProgressFrame.Size.X.Scale > 0) then
+            if not (UnivSettings.Visuals.Toggle and Player.Character and Character and Character:FindFirstChild("Humanoid") and Character.Head.PlayerInfo.Screen.HealthContainer.HealthBar.HealthProgressFrame.Size.X.Scale > 0) then
                 Visibility(false);
                 if Players:FindFirstChild(plr.Name) == nil then
                     destroyESP();
@@ -400,9 +420,9 @@ if VISUALS then
 
             -- Team Check + Exists Check
             local teamCheck = true;
-            if (not Settings.Visuals.Show_Team) and (plr.TeamColor == Player.TeamColor) then
+            if (not UnivSettings.Visuals.Show_Team) and (plr.TeamColor == Player.TeamColor) then
                 teamCheck = false;
-            elseif (not Settings.Visuals.Show_Enemy) and (plr.TeamColor ~= Player.TeamColor) then
+            elseif (not UnivSettings.Visuals.Show_Enemy) and (plr.TeamColor ~= Player.TeamColor) then
                 teamCheck = false;
             end
             if not (teamCheck and local_root_part and root_part) then
@@ -417,26 +437,26 @@ if VISUALS then
             -- Dist Check + On Screen
             local dist = (root_part.Position - local_root_part.Position).magnitude;
             local root_pos, onscreen = toPoint(Camera, root_part.Position);
-            if not (onscreen and dist < Settings.Visuals.Max_Distance) then
+            if not (onscreen and dist < UnivSettings.Visuals.Max_Distance) then
                 Visibility(false);
                 human.DisplayDistanceType = show_name;
                 return;
             end
 
-            -- Get Current Color based on Settings
+            -- Get Current Color based on UnivSettings
             local Current_Color;
-            if Settings.Visuals.Team_Check then
+            if UnivSettings.Visuals.Team_Check then
                 if plr.TeamColor == Player.TeamColor then
-                    Current_Color = Settings.Visuals.Team_Color;
+                    Current_Color = UnivSettings.Visuals.Team_Color;
                 else 
-                    Current_Color = Settings.Visuals.Enemy_Color;
+                    Current_Color = UnivSettings.Visuals.Enemy_Color;
                 end
             else
-                Current_Color = Settings.Visuals.Color;
+                Current_Color = UnivSettings.Visuals.Color;
             end
 
             -- Team Color
-            if Settings.Visuals.Show_Team_Color then
+            if UnivSettings.Visuals.Show_Team_Color then
                 Current_Color = util.c3_Array(plr.TeamColor.Color, 1);
             end
 
@@ -462,8 +482,8 @@ if VISUALS then
             local BR = V2(root_x+newsize_x, root_y+newsize_y)
 
             -- TRACERS
-            if Settings.Visuals.Tracers then
-                local Origin = Settings.Visuals.Tracer_Origin
+            if UnivSettings.Visuals.Tracers then
+                local Origin = UnivSettings.Visuals.Tracer_Origin
                 if Origin == "Mouse" then
                     Tracer.From = V2(Mouse.X, Mouse.Y + UI_Inset.Y)
                 elseif Origin == "Middle" then
@@ -478,7 +498,7 @@ if VISUALS then
             end
 
             -- HEALTH BAR
-            if Settings.Visuals.Health_Bar and dist < 1450 then
+            if UnivSettings.Visuals.Health_Bar and dist < 1450 then
                 local offsetX = CLAMP(ROUND(200/root_pos.Z), 4, 8)
 
                 local Right = root_x + newsize_x
@@ -497,7 +517,7 @@ if VISUALS then
                 healthBar.To = V2(barPosX, Top+1 + HealthLength)
 
                 if Hum_Health ~= prevhealth then
-                    healthBar.Color = util.Array_c3(Settings.Visuals.Health_Bar_Low):Lerp(util.Array_c3(Settings.Visuals.Health_Bar_High), HealthRatio)
+                    healthBar.Color = util.Array_c3(UnivSettings.Visuals.Health_Bar_Low):Lerp(util.Array_c3(UnivSettings.Visuals.Health_Bar_High), HealthRatio)
                     prevhealth = Hum_Health
                 end
 
@@ -509,8 +529,8 @@ if VISUALS then
             end
 
             -- BOXES
-            if Settings.Visuals.Boxes and dist < 1200 then
-                local box_mode = Settings.Visuals.Boxes_Mode
+            if UnivSettings.Visuals.Boxes and dist < 1200 then
+                local box_mode = UnivSettings.Visuals.Boxes_Mode
 
                 if box_mode == "Corners" then
                     local offset = FLOOR(ratio/4)
@@ -559,21 +579,21 @@ if VISUALS then
             end
 
             -- INFO
-            if Settings.Visuals.Info then
+            if UnivSettings.Visuals.Info then
                 INFO.Position = V2(root_x, root_y-newsize_y-INFO.TextBounds.Y)
                 INFO.Text = ""
 
                 human.DisplayDistanceType = hide_name
 
-                if Settings.Visuals.Names then
+                if UnivSettings.Visuals.Names then
                     INFO.Text = plr.Name
                 end
 
-                if Settings.Visuals.Health then
+                if UnivSettings.Visuals.Health then
                     INFO.Text = tostring(ROUND(Hum_Health/Hum_MaxHealth*100)).."% ".. INFO.Text
                 end
 
-                if Settings.Visuals.Distance then
+                if UnivSettings.Visuals.Distance then
                     INFO.Text = INFO.Text.." ("..tostring(ROUND(dist)).."s)"
                 end        
                 

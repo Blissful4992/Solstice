@@ -41,6 +41,11 @@ local Games = {
 	[1494262959] = "Criminality";
 	[595270616] = "State_Of_Anarchy";
 }
+local ExecuteUniversal = {
+	580765040,
+	1494262959,
+	595270616
+}
 
 -- Create folders
 for Id, Game in next, Games do
@@ -62,28 +67,34 @@ GameNameLowered = GameName:lower();
 GameNameClean = GameName:gsub("_", " ");
 
 -- Settings
-SettingsFile = "Solstice/" .. GameNameLowered .. ".dat";
+if Supported then
+	SettingsFile = "Solstice/" .. GameNameLowered .. ".dat";
 
-function Load() -- LOAD SETTINGS (can be forked into a multiple config system)
-	local Result = readfile(SettingsFile) or "{}";
-	local Table = HttpService:JSONDecode(Result) or {};
+	function Load() -- LOAD SETTINGS (can be forked into a multiple config system)
+		local Result = readfile(SettingsFile) or "{}";
+		local Table = HttpService:JSONDecode(Result) or {};
 
-	Settings = util.merge(Settings or {}, Table);
-end
+		Settings = util.merge(Settings or {}, Table);
+	end
 
-function Save() -- SAVE SETTINGS
-	writefile(SettingsFile, HttpService:JSONEncode(Settings or {}) or "{}");
-end
-
-function SaveDefault() -- SAVE SETTINGS
-	if not isfile(SettingsFile) then
+	function Save() -- SAVE SETTINGS
 		writefile(SettingsFile, HttpService:JSONEncode(Settings or {}) or "{}");
 	end
+
+	function SaveDefault() -- SAVE SETTINGS
+		if not isfile(SettingsFile) then
+			writefile(SettingsFile, HttpService:JSONEncode(Settings or {}) or "{}");
+		end
+	end
+end
+
+if ExecuteUniversal[game.GameId] and Supported then
+	loadstring(game:HttpGet("https://raw.githubusercontent.com/Blissful4992/Solstice/main/scripts/universal.lua"))();
 end
 
 -- Execute scripts + Inform player
 notification.new("info", "Information", "Loading " .. GameNameClean);
-loadstring(game:HttpGet("https://raw.githubusercontent.com/Blissful4992/Solstice/main/scripts/" .. GameNameClean))();
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Blissful4992/Solstice/main/scripts/" .. GameNameLowered .. ".lua"))();
 notification.new("success", "Success", "Loaded " .. GameNameClean .. " !");
 
 -- Window Theme
