@@ -832,6 +832,35 @@ if AIMBOT then
     })
 
     -- Aimbot Functions
+    local Aiming = false
+
+    local aim_c_1; aim_c_1 = UIS.InputBegan:Connect(function(input)
+        if DESTROY then
+            if aim_c_1 then
+                aim_c_1:Disconnect();
+            end
+            aim_c_1 = nil;
+            Aiming = false;
+        elseif Settings.Aimbot.Aim_Mode == "Key" and input.UserInputType == Enum.UserInputType.Keyboard and input.KeyCode == Enum.KeyCode[Settings.Aimbot.Aim_Key] then
+            Aiming = true
+        elseif Settings.Aimbot.Aim_Mode == "Mouse" and input.UserInputType == Enum.UserInputType.MouseButton2 then
+            Aiming = true
+        end
+    end)
+
+    local aim_c_2; aim_c_2 = UIS.InputEnded:Connect(function(input)
+        if DESTROY then
+            if aim_c_2 then
+                aim_c_2:Disconnect();
+            end
+            aim_c_2 = nil;
+            Aiming = false;
+        elseif Settings.Aimbot.Aim_Mode == "Key" and input.UserInputType == Enum.UserInputType.Keyboard and input.KeyCode == Enum.KeyCode[Settings.Aimbot.Aim_Key] then
+            Aiming = false
+        elseif Settings.Aimbot.Aim_Mode == "Mouse" and input.UserInputType == Enum.UserInputType.MouseButton2 then
+            Aiming = false
+        end
+    end)
 
     gravity = V3(0, 0, 0)
     function getBulletDrop(travelDistance, bulletSpeed)
