@@ -1053,7 +1053,9 @@ if AIMBOT then
                     if vis then
                         local smoothness = CLAMP(100-UnivSettings.Aimbot.Smoothness, 1, 100)/100
                         local sens = CLAMP(smoothness, 0.01, 1)/2
-                        mousemoverel(ROUND((pos.X - Mouse.X - UI_Inset.X) * sens), ROUND((pos.Y - Mouse.Y - UI_Inset.Y) * sens))
+                        -- mousemoverel(ROUND((pos.X - Mouse.X - UI_Inset.X) * sens), ROUND((pos.Y - Mouse.Y - UI_Inset.Y) * sens))
+
+                        Camera.CFrame = CF(Camera.CFrame.p, Selected_Aim_Pos);
                     end
                 end
             end
