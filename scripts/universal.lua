@@ -1083,7 +1083,8 @@ if AIMBOT then
                         local sens = CLAMP(smoothness, 0.01, 1)/2
                         -- mousemoverel(ROUND((pos.X - Mouse.X - UI_Inset.X) * sens), ROUND((pos.Y - Mouse.Y - UI_Inset.Y) * sens))
 
-                        Camera.CFrame = CF(Camera.CFrame.p, Selected_Aim_Pos);
+                        local dest = CF(Camera.CFrame.p, Selected_Aim_Pos);
+                        Camera.CFrame = Camera.CFrame:Lerp(dest, sens);
                     end
                 end
             end
