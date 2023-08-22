@@ -840,7 +840,7 @@ if AIMBOT then
     end
     
     function predictVelocity(part, offset, Vp)
-        if not Player.Character or not Player.Character.RightHand then return nil end
+        if not Player.Character or not Player.Character.PrimaryPart then return nil end
 
         if UnivSettings.Aimbot.Prediction and (Vp or HUGE) < 10000 then
             -- Vp => Projectile Speed
@@ -854,7 +854,7 @@ if AIMBOT then
             end
             local t = tick() - St
 
-            local P2 = Player.Character.RightHand.Position          -- Local Position 2
+            local P2 = Player.Character.PrimaryPart.Position          -- Local Position 2
             local T2 = part.Position + offset                   -- Target Position 2
             local Vt = (T1-T2).magnitude/t                               -- Explicit Target Speed
             local Tf = (P2-T2).magnitude/Vp                           -- Explicit Bullet Fly Time
