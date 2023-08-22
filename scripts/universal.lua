@@ -833,7 +833,7 @@ if AIMBOT then
 
     -- Aimbot Functions
 
-    gravity = V3(0, 16, 0)
+    gravity = V3(0, 0, 0)
     function getBulletDrop(travelDistance, bulletSpeed)
         local travelTime = travelDistance/bulletSpeed
         return gravity * travelTime ^ 2
@@ -944,10 +944,9 @@ if AIMBOT then
 
 
     function getClosest()
-        if not Player.Character or not Player.Character.PrimaryPart or PlayerCharacter.IsDead then return nil end
+        if not Player.Character or not Player.Character.PrimaryPart then return nil end
 
-        local SearchFolder, Closest;
-        local isAnimal = false
+        local Closest;
 
         do -- main loop
             local bone = UnivSettings.Aimbot.Bone
