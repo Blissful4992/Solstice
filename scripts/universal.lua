@@ -841,9 +841,9 @@ if AIMBOT then
             end
             aim_c_1 = nil;
             Aiming = false;
-        -- elseif Settings.Aimbot.Aim_Mode == "Key" and input.UserInputType == Enum.UserInputType.Keyboard and input.KeyCode == Enum.KeyCode[Settings.Aimbot.Aim_Key] then
+        -- elseif UnivSettings.Aimbot.Aim_Mode == "Key" and input.UserInputType == Enum.UserInputType.Keyboard and input.KeyCode == Enum.KeyCode[UnivSettings.Aimbot.Aim_Key] then
         --     Aiming = true
-        elseif Settings.Aimbot.Aim_Mode == "Mouse" and input.UserInputType == Enum.UserInputType.MouseButton2 then
+        elseif UnivSettings.Aimbot.Aim_Mode == "Mouse" and input.UserInputType == Enum.UserInputType.MouseButton2 then
             Aiming = true
         end
     end)
@@ -855,9 +855,9 @@ if AIMBOT then
             end
             aim_c_2 = nil;
             Aiming = false;
-        -- elseif Settings.Aimbot.Aim_Mode == "Key" and input.UserInputType == Enum.UserInputType.Keyboard and input.KeyCode == Enum.KeyCode[Settings.Aimbot.Aim_Key] then
+        -- elseif UnivSettings.Aimbot.Aim_Mode == "Key" and input.UserInputType == Enum.UserInputType.Keyboard and input.KeyCode == Enum.KeyCode[UnivSettings.Aimbot.Aim_Key] then
         --     Aiming = false
-        elseif Settings.Aimbot.Aim_Mode == "Mouse" and input.UserInputType == Enum.UserInputType.MouseButton2 then
+        elseif UnivSettings.Aimbot.Aim_Mode == "Mouse" and input.UserInputType == Enum.UserInputType.MouseButton2 then
             Aiming = false
         end
     end)
